@@ -1,0 +1,11 @@
+{
+  "name": "mygpt-root",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "start": "concurrently \"npm run dev --prefix Frontend\" \"npm run dev --prefix Backend\""
+  },
+  "devDependencies": {
+    "concurrently": "^9.2.1"
+  }
+}
