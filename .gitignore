@@ -1,24 +1,29 @@
-# Node modules
+# --- Node modules ---
 node_modules/
 Frontend/node_modules/
 Backend/node_modules/
 
-# Build outputs
+# --- Build outputs ---
 dist/
 dist-ssr/
 Frontend/dist/
 Backend/dist/
+build/
 
-# Logs
+# --- Logs ---
 *.log
-logs
+logs/
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
 pnpm-debug.log*
 lerna-debug.log*
 
-# Editor settings
+# --- Runtime data ---
+uploads/
+Backend/uploads/
+
+# --- Editor settings ---
 .vscode/
 .idea/
 *.suo
@@ -27,9 +32,15 @@ lerna-debug.log*
 *.sln
 *.sw?
 
-# Environment files (keep secrets safe!)
+# --- Environment files (keep secrets safe!) ---
+.env
+.env.local
 Backend/.env
 Frontend/.env
 
-# Misc
+# --- OS files ---
 .DS_Store
+Thumbs.db
+
+# --- Coverage/testing ---
+coverage/

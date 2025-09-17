@@ -3,7 +3,9 @@
   "version": "1.0.0",
   "private": true,
   "scripts": {
-    "start": "concurrently \"npm run dev --prefix Frontend\" \"npm run dev --prefix Backend\""
+    "dev": "concurrently \"npm run dev --prefix Frontend\" \"npm run dev --prefix Backend\"",
+    "build": "cd Frontend && npm install && npm run build",
+    "start": "node Backend/server.js"
   },
   "devDependencies": {
     "concurrently": "^9.2.1"
