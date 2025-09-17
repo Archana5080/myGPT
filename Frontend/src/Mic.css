@@ -1,0 +1,31 @@
+.micButton {
+  margin-left: 10px;
+  cursor: pointer;
+  font-size: 18px;
+  color: #bbb;
+  transition: all 0.2s ease;
+}
+
+.micButton:hover {
+  color: white;
+}
+
+.micButton.recording {
+  color: red;
+  animation: pulse 1s infinite;
+}
+
+@keyframes pulse {
+  0% {
+    transform: scale(1);
+    opacity: 1;
+  }
+  50% {
+    transform: scale(1.2);
+    opacity: 0.7;
+  }
+  100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+}

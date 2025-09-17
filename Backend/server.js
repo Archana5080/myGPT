@@ -8,6 +8,7 @@ import mongoose from "mongoose";
 
 import chatRoutes from "./routes/chat.js";
 import authRoutes from "./routes/auth.js";
+import voiceRoutes from "./routes/voice.js";
 import initializePassport from "./utils/passportConfig.js";
 initializePassport(passport);
 
@@ -59,6 +60,8 @@ app.use(passport.session());
 app.use("/api", chatRoutes);
 app.use("/auth", authRoutes);
 
+
+app.use("/api", voiceRoutes);
 // Start server
 app.listen(PORT, () => {
   console.log(` Server running on http://localhost:${PORT}`);

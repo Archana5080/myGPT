@@ -78,6 +78,9 @@ input:focus {
     font-size: 20px;
     position: absolute;
     right: 15px;
+    top: 50%;                     /* ✅ center vertically */
+    transform: translateY(-50%);  /* ✅ fix alignment */
+
     display: flex;
     align-items: center;
     justify-content: center;
@@ -86,6 +89,27 @@ input:focus {
 #submit i:hover {
     color: #fff;
 }
+
+  #submit-mic {
+    cursor: pointer;
+    height: 35px;
+    width: 35px;
+    font-size: 20px;
+    position: absolute;
+    top: 50%;                     /* ✅ center vertically */
+    transform: translateY(-50%);  /* ✅ fix alignment */
+
+    right: 55px;   /* 📌 push mic left of send */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+#submit-mic i:hover {
+    color: #fff;
+}
+
+
 
 .info {
     font-size: 0.8rem;
@@ -116,11 +140,11 @@ input:focus {
     cursor: pointer;
 }
 
-
 .dropDownItem:hover {
     background-color: rgba(180, 180, 180, 0.1);
     border-radius: 6px;
 }
+
 .chatMessages {
     flex: 1;                /* take all remaining space */
     width: 100%;

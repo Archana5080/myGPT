@@ -74,7 +74,7 @@ router.post("/chat", async(req, res) => {
     const {threadId, message} = req.body;
 
     if(!threadId || !message) {
-        res.status(400).json({error: "missing required fields"});
+       return  res.status(400).json({error: "missing required fields"});
     }
 
     try {
@@ -100,8 +100,11 @@ router.post("/chat", async(req, res) => {
         res.json({reply: assistantReply});
     } catch(err) {
         console.log(err);
-        res.status(500).json({error: "something went wrong"});
+         return res.status(500).json({error: "something went wrong"});
     }
 });
+
+
+
 
 export default router;
