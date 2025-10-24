@@ -29,8 +29,15 @@ mongoose.connect(process.env.MONGODB_URI, {
 
 // Middleware
 app.use(express.json());
+const allowedOrigins = ["http://localhost:5174", "https://myfrontend.onrender.com"];
 app.use(cors({
-  origin: "http://localhost:5174",
+  origin: (origin, callback) => {
+    if (!origin || allowedOrigins.includes(origin)) {
+      callback(null, true);
+    } else {
+      callback(new Error("Not allowed by CORS"));
+    }
+  },
   credentials: true,
 }));
 

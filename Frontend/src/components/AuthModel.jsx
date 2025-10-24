@@ -11,8 +11,8 @@ export default function AuthModal() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     const url = isSignup
-      ? "http://localhost:8080/auth/signup"
-      : "http://localhost:8080/auth/login";
+  ? "https://mygpt-v0dp.onrender.com/auth/signup"
+  : "https://mygpt-v0dp.onrender.com/auth/login";
 
     try {
       const res = await fetch(url, {
