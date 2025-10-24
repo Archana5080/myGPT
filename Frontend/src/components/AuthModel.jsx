@@ -1,18 +1,21 @@
 import { useState, useContext } from "react";
 import { MyContext } from "../MyContext.jsx";
-import "./AuthModel.css"; // we'll create this file next
+import "./AuthModel.css";
 
 export default function AuthModal() {
   const { setUser } = useContext(MyContext);
   const [isSignup, setIsSignup] = useState(false);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [loading, setLoading] = useState(false);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setLoading(true);
+
     const url = isSignup
-  ? "https://mygpt-v0dp.onrender.com/auth/signup"
-  : "https://mygpt-v0dp.onrender.com/auth/login";
+      ? "https://mygpt-v0dp.onrender.com/auth/signup"
+      : "https://mygpt-v0dp.onrender.com/auth/login";
 
     try {
       const res = await fetch(url, {
@@ -24,13 +27,18 @@ export default function AuthModal() {
 
       const data = await res.json();
       if (res.ok) {
-        setUser(data.user || { email }); // save user globally
+        // Save user globally
+        setUser(data.user || { email });
+        setEmail("");
+        setPassword("");
       } else {
-        alert(data.message);
+        alert(data.message || "Something went wrong!");
       }
     } catch (err) {
       console.error(err);
       alert("Something went wrong!");
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -53,12 +61,17 @@ export default function AuthModal() {
             onChange={(e) => setPassword(e.target.value)}
             required
           />
-          <button type="submit">{isSignup ? "Sign Up" : "Login"}</button>
+          <button type="submit" disabled={loading}>
+            {loading ? "Please wait..." : isSignup ? "Sign Up" : "Login"}
+          </button>
         </form>
 
         <p>
           {isSignup ? "Already have an account?" : "Don’t have an account?"}{" "}
-          <span onClick={() => setIsSignup(!isSignup)}>
+          <span
+            onClick={() => setIsSignup(!isSignup)}
+            style={{ cursor: "pointer", color: "blue" }}
+          >
             {isSignup ? "Login" : "Sign Up"}
           </span>
         </p>
