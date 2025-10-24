@@ -28,7 +28,7 @@ mongoose.connect(process.env.MONGODB_URI, {
 .catch((err) => console.log(" MongoDB connection error:", err));
 
 // Middleware
-import cors from "cors";
+
 
 const allowedOrigins = ["http://localhost:5174", "https://mygpt-frontend-f2ip.onrender.com"];
 
