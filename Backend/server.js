@@ -28,8 +28,10 @@ mongoose.connect(process.env.MONGODB_URI, {
 .catch((err) => console.log(" MongoDB connection error:", err));
 
 // Middleware
-app.use(express.json());
-const allowedOrigins = ["http://localhost:5174", "https://myfrontend.onrender.com"];
+import cors from "cors";
+
+const allowedOrigins = ["http://localhost:5174", "https://mygpt-frontend-f2ip.onrender.com"];
+
 app.use(cors({
   origin: (origin, callback) => {
     if (!origin || allowedOrigins.includes(origin)) {
@@ -40,6 +42,7 @@ app.use(cors({
   },
   credentials: true,
 }));
+
 
 // Session
 app.use(session({
