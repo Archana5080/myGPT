@@ -1,39 +1,49 @@
 import express from "express";
-import bcrypt from "bcryptjs";
 import passport from "passport";
 import User from "../models/User.js";
 
 const router = express.Router();
 
-// Signup
-router.post("/signup", async (req, res) => {
+// Signup route
+router.post("/signup", async (req, res, next) => {
   const { email, password } = req.body;
   try {
-    const hashedPassword = await bcrypt.hash(password, 10);
-    const newUser = new User({ email, password: hashedPassword });
-    await newUser.save();
-    res.json({ message: "User registered successfully" });
+    const user = new User({ email });
+    await User.register(user, password); // passport-local-mongoose
+
+    // Automatically log in the user after signup
+    req.login(user, (err) => {
+      if (err) return next(err);
+      res.json({ message: "Signup successful", user: { email: user.email } });
+    });
   } catch (err) {
-    res.status(400).json({ message: "Error: " + err.message });
+    console.error("Signup error:", err);
+    if (err.name === "UserExistsError") {
+      return res.status(400).json({ message: "Email already registered" });
+    }
+    res.status(400).json({ message: "Something went wrong", error: err.message });
   }
 });
 
-// Login
-router.post("/login", passport.authenticate("local"), (req, res) => {
-  res.json({ message: "Login successful", user: req.user });
+// Login route
+router.post("/login", (req, res, next) => {
+  passport.authenticate("local", (err, user, info) => {
+    if (err) return next(err);
+    if (!user) return res.status(400).json({ message: "Invalid email or password" });
+
+    req.login(user, (err) => {
+      if (err) return next(err);
+      res.json({ message: "Login successful", user: { email: user.email } });
+    });
+  })(req, res, next);
 });
 
-// Logout
+// Logout route
 router.post("/logout", (req, res) => {
-  req.logout(() => res.json({ message: "Logged out successfully" }));
+  req.logout((err) => {
+    if (err) return res.status(400).json({ message: "Logout failed" });
+    res.json({ message: "Logged out successfully" });
+  });
 });
 
-// Protected route
-router.get("/profile", (req, res) => {
-  if (!req.isAuthenticated()) {
-    return res.status(401).json({ message: "Unauthorized" });
-  }
-  res.json({ user: req.user });
-});
-
-export default router;  //  instead of module.exports
+export default router;

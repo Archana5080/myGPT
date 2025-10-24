@@ -1,10 +1,12 @@
-import mongoose from "mongoose";
 
-const UserSchema = new mongoose.Schema({
+import mongoose from "mongoose";
+import passportLocalMongoose from "passport-local-mongoose";
+
+const userSchema = new mongoose.Schema({
   email: { type: String, required: true, unique: true },
-  password: { type: String, required: true }
+  password: String, // hashed automatically
 });
 
-// 👇 Use export default for ESM
-const User = mongoose.model("User", UserSchema);
-export default User;
+userSchema.plugin(passportLocalMongoose, { usernameField: "email" });
+
+export default mongoose.model("User", userSchema);
